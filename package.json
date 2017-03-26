@@ -4,7 +4,6 @@
   "description": "Immutable state container for JavaScript",
   "main": "index.js",
   "scripts": {
-    "prepublish": "coffee -c -b index.coffee"
   },
   "repository": {
     "type": "git",
@@ -20,9 +19,6 @@
     "url": "https://github.com/jbe/immux/issues"
   },
   "homepage": "https://github.com/jbe/immux#readme",
-  "dependencies": {
-  },
-  "devDependencies": {
-    "coffee-script": "^1.12.4"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
