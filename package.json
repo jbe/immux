@@ -1,0 +1,28 @@
+{
+  "name": "immux",
+  "version": "0.1.0",
+  "description": "Immutable state container for JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "coffee -c -b index.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbe/immux.git"
+  },
+  "keywords": [
+    "state-container",
+    "frp"
+  ],
+  "author": "Jostein B. Eliassen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jbe/immux/issues"
+  },
+  "homepage": "https://github.com/jbe/immux#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "coffee-script": "^1.12.4"
+  }
+}
