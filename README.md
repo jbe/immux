@@ -18,7 +18,28 @@ Relatives: [globus](https://github.com/jbe/globus) | [SimpleImmutable](https://g
 ## Code sample
 
 ```javascript
-TODO
+import { createStore, consoleLogger, Adapters } from "immux";
+import { createRefresh } from "kjappas";
+import SimpleImmutable from "simple-immutable";
+
+import root from "./model/root.coffee";
+import setGlobalListeners from  "./setGlobalListeners.coffee";
+import {App} from "./view/layouts.coffee";
+
+const adapter = Adapters.SimpleImmutable(SimpleImmutable);
+const {$, _, subscribe} = createStore(root, adapter);
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  const refresh = createRefresh(
+    App,
+    document.getElementById("app-placeholder"));
+
+  subscribe(consoleLogger, refresh);
+
+  refresh($, _);
+  setGlobalListeners($);
+});
 
 ```
 
