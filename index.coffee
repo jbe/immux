@@ -121,8 +121,8 @@ consoleLogger = (tree, state, fn, params) ->
 #   subscribe: takes any numer of functions as parameters, subscribing them to stage changes.
 # }
 createStore = (reducerTree, adapter) ->
-  if (!reducerTree) throw new Error "no reducer tree passed to crateStore"
-  if (!reducerTree) throw new Error "adapter passed to crateStore"
+  throw new Error "no reducer tree passed to crateStore" if !reducerTree
+  throw new Error "adapter passed to crateStore" if !adapter
 
   initialState = extractInitialState reducerTree
   ssc = SimpleStateContainer initialState, adapter
