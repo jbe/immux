@@ -5,6 +5,8 @@
 
 ---
 
+`npm install --save immux`
+
 *This project is in development, and may contain some bugs. It doesn't have any tests yet.*
 
 Immux is a JavaScript state container, similar to [Redux](https://github.com/reactjs/redux#readme), but with some differences:
@@ -15,10 +17,6 @@ Immux is a JavaScript state container, similar to [Redux](https://github.com/rea
 
 Rather than trying to explain, lets first see the mandatory counter app example code:
 
-
-## Installation
-
-`npm install --save immux`
 
 ## Code sample
 
