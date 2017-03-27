@@ -18,29 +18,44 @@ Relatives: [globus](https://github.com/jbe/globus) | [SimpleImmutable](https://g
 ## Code sample
 
 ```javascript
-import { createStore, consoleLogger, Adapters } from "immux";
-import { createRefresh } from "kjappas";
+import { createStore, Adapters } from "immux";
+import { createRefresh, infest } from "kjappas";
 import SimpleImmutable from "simple-immutable";
 
-import root from "./model/root.coffee";
-import setGlobalListeners from  "./setGlobalListeners.coffee";
-import {App} from "./view/layouts.coffee";
+infest(window);
 
-const adapter = Adapters.SimpleImmutable(SimpleImmutable);
-const {$, _, subscribe} = createStore(root, adapter);
+const reducers = {
+  counter: {
+    initial: {value: 0},
+
+    increment: (state) => state.set("value", state.get("value") + 1)
+  }
+};
+
+function CounterView($, _) {
+  return div(".hello",
+    h1("The amazing counter app"),
+    button(
+      {
+        $click: () => $.counter.increment(1)
+      },
+      "Value: " + _.counter.value)
+  );
+}
+
+const
+    adapter = Adapters.SimpleImmutable(SimpleImmutable),
+    store   = createStore(reducers, adapter);
 
 document.addEventListener("DOMContentLoaded", function() {
 
   const refresh = createRefresh(
-    App,
+    CounterView,
     document.getElementById("app-placeholder"));
 
-  subscribe(consoleLogger, refresh);
-
-  refresh($, _);
-  setGlobalListeners($);
+  store.subscribe(refresh);
+  refresh(store.$, store._);
 });
-
 ```
 
 ## API
