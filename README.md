@@ -33,7 +33,7 @@ import SimpleImmutable from "simple-immutable";
 infest(window);
 
 // The reducer definition tree that we will bind to our immux store.
-// The nesting structure accomplishes the same as combineReducers  in Redux.
+// The nesting structure accomplishes the same as combineReducers in Redux.
 const reducers = {
   counter: {
     // initial counter state
@@ -45,12 +45,11 @@ const reducers = {
 };
 
 // Our root view template; a pure function from root state and dispatchable
-// actions, to a virtual dom that will be rendered on every update.
+// actions, to virtual dom view.
 // $ is a bound version of the reducer tree which can be used to dispatch
-// state changes.
+//   state changes.
 // _ is the root state (as plain JavaScript, because this is the default
-// for the SimpleImmutable adapter that we use here).
-
+//   for the SimpleImmutable adapter that we use here).
 function CounterView($, _) {
   return div(".hello",
     h1("Mandatory counter app"),
@@ -98,11 +97,11 @@ TODO: gentler introduction
 
 Given a tree of reducer definitions, and the data type adapter for the data type used by the reducers and initial values of the tree, return an immux store object with the fields `{$, _, subscribe}`.
 
-The returned field `$` is a tree of bound reducer functions that can be called to cause state changes. This is the immux equivalent to `store.dispatch` in Redux. The tree of bound reducers is a one-to-one mapping of the tree of reducer function definitions, however, the bound reducer functions ni longer take a first state parameter, and no longer return state. Instead, they cause those state changes to the store.
+The returned field `$` is a tree of bound reducer functions that can be called to cause state changes. This is the immux equivalent to `store.dispatch` in Redux. The tree of bound reducers is a one-to-one mapping of the tree of reducer function definitions, however, the bound reducer functions no longer take a first state parameter, and no longer return state. Instead, they cause those state changes to the store.
 
 The returned field `_` is the inital state that was extracted from the tree of reducer definitions. This can be used however you like, but most typically for the initial draw call, before state changes have had the chance to trigger a subscribed refresh.
 
-The returned field `subscribe` is a function taking any number of arguments, each one being a listener function of four parameters: `$, _, func, params`
+The returned field `subscribe` is a function taking any number of arguments, each one being a listener function of four parameters, such as `listener($, _, func, params)`.
 
 - `$` is the same object as the `$ ` described earlier.
 - `_` is the current state, which may change between invocations; unlike `$`.
@@ -113,13 +112,13 @@ The returned field `subscribe` is a function taking any number of arguments, eac
 
 *Bound reducer* functions no longer take the state as their first parameter, and no longer return the updated state. However, when they are called, they will inflict this state change on the store that they are bound to.
 
-Reducer state is local by default. A reducer residing at `root.users.add`, may only access state and cause changes under the `users` path, unless it is explicitly marked as global.
+Reducer state is local by default. A reducer residing at `root.users.add`, may only access state and cause changes under the `users` path (unless it is marked as global, see further down).
 
 TODO: examples
 
 #### consoleLogger(tree, state, func, args)
 
-As convenience, immux exports a simple console logger that can be subscribed on a store to print all dispatched state changes to the console.
+A simple console logger that can be subscribed on a store to print all dispatched state changes.
 
 TODO: example
 
@@ -139,8 +138,4 @@ TODO: example
 
 #### Adapters.SimpleImmutable(SimpleImmutable)
 
-SimpleImmutable is an immutable data type that was designed specifically for immux. It provides O(1) conversion to plain JS, which allows us to pass the state to the view as plain js.
-
-One of my main goals with immux was to let the view be a 100% pure function of the state (with the slight exception of dispatching, of course). SimpleImmutable makes this very clean, because the only thing the views every deal with are plain, frozen JavaScript values.
-
-For a usage example, just se the example code near the top of this README.
+SimpleImmutable is an immutable data type that was designed specifically for immux. It lets us to pass the state to the view as plain js without any performance penalty. For a usage example, just se the example code near the top of this README.
