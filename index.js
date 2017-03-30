@@ -144,14 +144,16 @@ function SimpleStateContainer(collection, adapter) {
 };
 
 export function consoleLogger($, _, fn, params) {
-  if (params.length && params.length > 1) {
-    params = [params[0], "(...)"];
-  }
-  console.groupCollapsed.apply(console, ["$." + fn._$$name].concat(slice.call(params)));
-  console.log(fn);
-  console.log(_);
-  console.trace("Trace");
-  return console.groupEnd();
+  var previewParams = params.length && params.length > 1
+      ? [params[0], "(...)"]
+      : slice.call(params);
+
+  console.groupCollapsed.apply(console, ["$." + fn._$$name].concat(previewParams));
+  console.log.apply(console, ["$." + fn._$$name].concat(["("]).concat(slice.call(params)).concat([")"]));
+  // console.log(fn);
+  console.log("State:", _);
+  console.trace();
+  console.groupEnd();
 };
 
 export function createStore(reducerTree, adapter) {
